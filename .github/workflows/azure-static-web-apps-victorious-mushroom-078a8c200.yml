@@ -40,7 +40,7 @@ jobs:
       - name: Close Pull Request
         id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
-        # ↓↓ ここから ↓↓ update
+        # ↓↓ ここから ↓↓ update2
         env:
           VUE_APP_LIFFID: ${{ secrets.LIFFID }}
           VUE_APP_USE_VCONSOLE: true

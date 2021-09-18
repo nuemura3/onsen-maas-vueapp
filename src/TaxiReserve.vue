@@ -137,10 +137,10 @@ export default {
 
   // ページを開いた時に実行
   mounted: async function () {
-    try {
-      await liff.init({ liffId: process.env.VUE_APP_LIFFID })
       console.log('liffId:')
       console.log(process.env.VUE_APP_LIFFID)
+    try {
+      await liff.init({ liffId: process.env.VUE_APP_LIFFID })
       if (liff.isLoggedIn()) {
         await this.getProfile()
       } else {

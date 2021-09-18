@@ -140,8 +140,7 @@ export default {
       console.log('liffId:')
       console.log(process.env.VUE_APP_LIFFID)
     try {
-      // await liff.init({ liffId: process.env.VUE_APP_LIFFID })
-      await liff.init({ liffId: '1656428569-3QG0yWPd' })
+      await liff.init({ liffId: process.env.VUE_APP_LIFFID })
       if (liff.isLoggedIn()) {
         await this.getProfile()
       } else {

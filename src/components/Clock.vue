@@ -12,13 +12,14 @@
     <!-- 以下にふらっぺガントチャートを表示 -->
     <div class="myfrappe">
       <h1>ふらっぺのお試し</h1>
-      <svg id="gantt"></svg>
+      <!-- <svg id="gantt"></svg> -->
+      <svg ref="gantt"></svg>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, computed } from "vue";
+import { defineComponent, reactive, toRefs, computed, ref } from "vue";
 // ふらっぺのganttの読み込み
 // import Gantt from "../ex_lib/frappe/frappe-gantt.js";
 import Gantt from "frappe-gantt";
@@ -85,7 +86,9 @@ export default defineComponent({
       // },
     ];
     // ふらっぺのgantt
-    var gantt = new Gantt("#gantt", tasks);
+    // var gantt = new Gantt("#gantt", tasks);
+    var gantt = ref(null);
+    gantt = new Gantt(gantt.value, tasks);
 
     return {
       state,

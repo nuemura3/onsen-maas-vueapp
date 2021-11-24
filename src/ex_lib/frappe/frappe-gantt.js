@@ -1960,3 +1960,5 @@ var Gantt = (function () {
     return Gantt;
 
 }());
+
+export default Gantt;

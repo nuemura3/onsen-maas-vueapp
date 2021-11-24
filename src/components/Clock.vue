@@ -9,11 +9,19 @@
       </div>
       <button @click="setDate">Get Now</button>
     </div>
+    <!-- 以下にふらっぺガントチャートを表示 -->
+    <div class="myfrappe">
+      <h1>ふらっぺのお試し</h1>
+      <svg id="gantt"></svg>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, computed } from "vue";
+// ふらっぺのganttの読み込み
+// import Gantt from "../ex_lib/frappe/frappe-gantt.js";
+import Gantt from "frappe-gantt";
 
 const zeroPadding = (num: number, digit: number) => {
   return (Array(digit).join("0") + num).slice(-digit);
@@ -41,6 +49,44 @@ export default defineComponent({
     const minutes = computed(() => zeroPadding(date.value.getMinutes(), 2));
     const seconds = computed(() => zeroPadding(date.value.getSeconds(), 2));
 
+    // ふらっぺのgantt用のタスク
+    const tasks = [
+      {
+        id: "Task 1",
+        name: "Redesign website",
+        start: "2016-12-28",
+        end: "2016-12-31",
+        progress: 20,
+        dependencies: "Task 2, Task 3",
+      },
+      // {
+      //   id: "Task 1",
+      //   name: "Redesign website1",
+      //   start: "2016-12-28",
+      //   end: "2016-12-31",
+      //   progress: 20,
+      //   dependencies: "Task 2",
+      // },
+      // {
+      //   id: "Task 2",
+      //   name: "Redesign website2",
+      //   start: "2016-12-28",
+      //   end: "2016-12-31",
+      //   progress: 20,
+      //   dependencies: "Task 3",
+      // },
+      // {
+      //   id: "Task 3",
+      //   name: "Redesign website3",
+      //   start: "2016-12-28",
+      //   end: "2016-12-31",
+      //   progress: 20,
+      //   dependencies: "Task 1",
+      // },
+    ];
+    // ふらっぺのgantt
+    var gantt = new Gantt("#gantt", tasks);
+
     return {
       state,
       setDate,
@@ -50,6 +96,7 @@ export default defineComponent({
       hours,
       minutes,
       seconds,
+      gantt,
     };
   },
 });
@@ -60,21 +107,21 @@ export default defineComponent({
   background-color: #3a4a5e;
   padding: 2%;
 }
- 
+
 .date {
   text-align: right;
   color: #fff;
-  font-family: 'Teko', sans-serif;
+  font-family: "Teko", sans-serif;
   font-size: 4rem;
-  letter-spacing: .1em;
-  margin: .0em 0;
+  letter-spacing: 0.1em;
+  margin: 0em 0;
   line-height: 1;
 }
- 
+
 .time {
   display: flex;
 }
- 
+
 .time-item {
   display: flex;
   justify-content: center;
@@ -86,31 +133,31 @@ export default defineComponent({
   padding: 0.5em;
   margin: 3px;
   color: #fff;
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 3rem;
   line-height: 1;
   background-color: #48b883;
   box-sizing: border-box;
 }
- 
+
 .time-item:before {
   position: absolute;
   right: 5px;
   bottom: 1px;
   z-index: 1;
   color: #3a4a5e;
-  font-family: 'Teko', sans-serif;
+  font-family: "Teko", sans-serif;
   font-size: 1.4rem;
-  letter-spacing: .05em;
+  letter-spacing: 0.05em;
 }
- 
+
 .hours:before {
   content: "Hours";
 }
 .minutes:before {
   content: "Minutes";
 }
- 
+
 .seconds:before {
   content: "Seconds";
 }

@@ -61,35 +61,27 @@ export default defineComponent({
     const tasks = [
       {
         id: "Task 1",
-        name: "Redesign website",
-        start: "2016-12-28",
-        end: "2016-12-31",
-        progress: 20,
-        dependencies: "Task 2, Task 3",
-      },
-      {
-        id: "Task 1",
-        name: "Redesign website1",
-        start: "2016-12-28",
-        end: "2016-12-31",
-        progress: 20,
-        dependencies: "Task 2",
+        name: "生地コネ",
+        start: "2021-11-28 13:00",
+        end: "2021-11-29 12:00",
+        progress: 80,
+        dependencies: "",
       },
       {
         id: "Task 2",
-        name: "Redesign website2",
-        start: "2016-12-28",
-        end: "2016-12-31",
-        progress: 20,
-        dependencies: "Task 3",
+        name: "焼き",
+        start: "2021-11-29 15:00",
+        end: "2021-11-30 11:00",
+        progress: 30,
+        dependencies: "Task 1",
       },
       {
         id: "Task 3",
-        name: "Redesign website3",
-        start: "2016-12-28",
-        end: "2016-12-31",
-        progress: 20,
-        dependencies: "Task 1",
+        name: "トッピング",
+        start: "2021-11-30 13:00",
+        end: "2021-12-1 9:00",
+        progress: 0,
+        dependencies: "Task 2",
       },
     ];
     // ふらっぺのgantt
@@ -100,7 +92,21 @@ export default defineComponent({
       if (!gantt.value) {
         return;
       }
-      new Gantt(gantt.value, tasks);
+      new Gantt(gantt.value, tasks, {
+        header_height: 50,
+        // column_width: 30,
+        column_width: 60,
+        step: 24,
+        view_modes: ["Quarter Day", "Half Day", "Day", "Week", "Month"],
+        // bar_height: 20,
+        bar_height: 40,
+        bar_corner_radius: 3,
+        arrow_curve: 5,
+        padding: 18,
+        view_mode: "Quarter Day",
+        date_format: "YYYY-MM-DD",
+        language: "zh",
+      }).change_view_mode("Quarter Day"); // Quarter Day, Half Day, Day, Week, Month
     });
 
     return {
@@ -176,5 +182,160 @@ export default defineComponent({
 
 .seconds:before {
   content: "Seconds";
+}
+
+.gantt .grid-background {
+  fill: none;
+}
+
+.gantt .grid-header {
+  fill: #ffffff;
+  stroke: #e0e0e0;
+  stroke-width: 1.4;
+}
+
+.gantt .grid-row {
+  fill: #ffffff;
+}
+
+.gantt .grid-row:nth-child(even) {
+  fill: #f5f5f5;
+}
+
+.gantt .row-line {
+  stroke: #ebeff2;
+}
+
+.gantt .tick {
+  stroke: #e0e0e0;
+  stroke-width: 0.2;
+}
+.gantt .tick.thick {
+  stroke-width: 0.4;
+}
+
+.gantt .today-highlight {
+  fill: #fcf8e3;
+  opacity: 0.5;
+}
+
+.gantt .arrow {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.4;
+}
+
+.gantt .bar {
+  fill: #b8c2cc;
+  stroke: #8d99a6;
+  stroke-width: 0;
+  transition: stroke-width 0.3s ease;
+  user-select: none;
+}
+
+/* .gantt .bar-progress {
+  fill: #a3a3ff;
+} */
+.myfrappe .bar-progress {
+  fill: red;
+}
+
+.gantt .bar-invalid {
+  fill: transparent;
+  stroke: #8d99a6;
+  stroke-width: 1;
+  stroke-dasharray: 5;
+}
+.gantt .bar-invalid ~ .bar-label {
+  fill: #555;
+}
+
+.gantt .bar-label {
+  fill: #fff;
+  dominant-baseline: central;
+  text-anchor: middle;
+  font-size: 12px;
+  font-weight: lighter;
+}
+.gantt .bar-label.big {
+  fill: #555;
+  text-anchor: start;
+}
+
+.gantt .handle {
+  fill: #ddd;
+  cursor: ew-resize;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.gantt .bar-wrapper {
+  cursor: pointer;
+  outline: none;
+}
+.gantt .bar-wrapper:hover .bar {
+  fill: #a9b5c1;
+}
+.gantt .bar-wrapper:hover .bar-progress {
+  fill: #8a8aff;
+}
+.gantt .bar-wrapper:hover .handle {
+  visibility: visible;
+  opacity: 1;
+}
+.gantt .bar-wrapper.active .bar {
+  fill: #a9b5c1;
+}
+.gantt .bar-wrapper.active .bar-progress {
+  fill: #8a8aff;
+}
+
+.gantt .lower-text,
+.gantt .upper-text {
+  font-size: 12px;
+  text-anchor: middle;
+}
+
+.gantt .upper-text {
+  fill: #555;
+}
+
+.gantt .lower-text {
+  fill: #333;
+}
+
+.gantt .hide {
+  display: none;
+}
+
+.gantt-container {
+  position: relative;
+  overflow: auto;
+  font-size: 12px;
+}
+.gantt-container .popup-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 0;
+  color: #959da5;
+  border-radius: 3px;
+}
+.gantt-container .popup-wrapper .title {
+  border-bottom: 3px solid #a3a3ff;
+  padding: 10px;
+}
+.gantt-container .popup-wrapper .subtitle {
+  padding: 10px;
+  color: #dfe2e5;
+}
+.gantt-container .popup-wrapper .pointer {
+  position: absolute;
+  height: 5px;
+  margin: 0 0 0 -5px;
+  border: 5px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.8);
 }
 </style>

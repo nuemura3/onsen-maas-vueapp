@@ -19,7 +19,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, computed, ref } from "vue";
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  computed,
+  ref,
+  onMounted,
+} from "vue";
 // ふらっぺのganttの読み込み
 // import Gantt from "../ex_lib/frappe/frappe-gantt.js";
 import Gantt from "frappe-gantt";
@@ -60,35 +67,41 @@ export default defineComponent({
         progress: 20,
         dependencies: "Task 2, Task 3",
       },
-      // {
-      //   id: "Task 1",
-      //   name: "Redesign website1",
-      //   start: "2016-12-28",
-      //   end: "2016-12-31",
-      //   progress: 20,
-      //   dependencies: "Task 2",
-      // },
-      // {
-      //   id: "Task 2",
-      //   name: "Redesign website2",
-      //   start: "2016-12-28",
-      //   end: "2016-12-31",
-      //   progress: 20,
-      //   dependencies: "Task 3",
-      // },
-      // {
-      //   id: "Task 3",
-      //   name: "Redesign website3",
-      //   start: "2016-12-28",
-      //   end: "2016-12-31",
-      //   progress: 20,
-      //   dependencies: "Task 1",
-      // },
+      {
+        id: "Task 1",
+        name: "Redesign website1",
+        start: "2016-12-28",
+        end: "2016-12-31",
+        progress: 20,
+        dependencies: "Task 2",
+      },
+      {
+        id: "Task 2",
+        name: "Redesign website2",
+        start: "2016-12-28",
+        end: "2016-12-31",
+        progress: 20,
+        dependencies: "Task 3",
+      },
+      {
+        id: "Task 3",
+        name: "Redesign website3",
+        start: "2016-12-28",
+        end: "2016-12-31",
+        progress: 20,
+        dependencies: "Task 1",
+      },
     ];
     // ふらっぺのgantt
     // var gantt = new Gantt("#gantt", tasks);
-    var gantt = ref(null);
-    gantt = new Gantt(gantt.value, tasks);
+    const gantt = ref<SVGElement>(); //HTMLElement or SVGElement
+
+    onMounted(() => {
+      if (!gantt.value) {
+        return;
+      }
+      new Gantt(gantt.value, tasks);
+    });
 
     return {
       state,
